@@ -14,8 +14,6 @@
 class Trajectoire
 {
 	private:
-	
-	//Attributs
 		/**
 		 * Liste de points formant la trajectoire
 		 */
@@ -26,8 +24,6 @@ class Trajectoire
 		Color couleur_ (utile ?);
 	
 	public:
-		
-	//Constructeur et destructeur
 		/** --------------------------------------------------------------------
 		 * @brief Constructeur d'une trajectoire
 		 *
@@ -83,7 +79,7 @@ class Trajectoire
 		 *
 		 * @b Complexité O(1)
 		 */
-		Point getPointTrajet (int i);
+		Point getPointTrajet (int i) const;
 
 		/** --------------------------------------------------------------------
 		 * @brief Accesseur de la couleur
@@ -92,7 +88,7 @@ class Trajectoire
 		 *
 		 * @b Complexité O(1)
 		 */
-		Color getCouleur ();
+		Color getCouleur () const;
 
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur du premier point de la liste
@@ -134,11 +130,11 @@ class Trajectoire
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur de la couleur
 		 *
-		 * @param c couleur remplacante
+		 * @param couleur couleur remplacante
 		 *
 		 * @b Complexité O(1)
 		 */
-		void setCouleur (Color c);
+		void setCouleur (Color couleur);
 	
 	//Autres méthodes
 		/**
@@ -148,7 +144,7 @@ class Trajectoire
 		 *
 		 * @b Complexité O(1)
 		 */
-		void ajouterPoint(Point p);
+		void ajouterPoint (Point p);
 
 		/**
 		 * @brief Supprimer un point dans la liste
@@ -157,7 +153,7 @@ class Trajectoire
 		 *
 		 * @b Complexité O(1)
 		 */
-		void supprimerPoint(Point p);
+		void supprimerPoint (Point p);
 
 		/**
 		 * @brief Compte le nombre de points dans la liste
@@ -166,7 +162,7 @@ class Trajectoire
 		 *
 		 * @b Complexité O(1)
 		 */
-		unsigned nbPoint();
+		unsigned nbPoint ();
 		/*
 		* + toutes les fonctions correspondant à la liste comme :
 		* ajouterPoint (Point p)
@@ -175,5 +171,9 @@ class Trajectoire
 		*/
 		void calculeTrajectoire (image masqueTrajectoire);
 		bool estDejaDansTrajectoire (Point p);
+}; //class Trajectoire
 
-		getTaille
+/******************************************************************************/
+#include "Trajectoire.cpp"
+
+#endif // TRAJECTOIRE_HPP
