@@ -37,7 +37,7 @@ class Car
 		 *
 		 * @b Complexité O(1)
 		**/
-		void reset();
+		virtual void reset();
 		
 		/** --------------------------------------------------------------------
 		 * @brief Affichage de la voiture.
