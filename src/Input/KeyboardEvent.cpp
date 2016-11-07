@@ -1,63 +1,66 @@
 /**
- * @file KeyEvent.cpp
+ * @file KeyBoardEvent.cpp
  * @author HUNAULT Marion & LE BARS Yannis
- * @brief Définition des méthodes de la classe KeyEvent.
+ * @brief Définition des méthodes de la classe KeyboardEvent.
 **/
 
 
-#include "KeyEvent.hpp"
+#include "KeyboardEvent.hpp"
+
 #include <sstream> //pour les conversions en chaine
+
+#include <SFML/Window.hpp>
 
 using namespace std;
 
 //CONSTANTES
 //------------------------------------------------------------------------------
-const int KeyEvent::KEY_PRESSE = 0;
+const sf::Event::EventType KeyboardEvent::KEY_PRESSE = sf::Event::KeyPressed;
 
 //------------------------------------------------------------------------------
-const int KeyEvent::KEY_RELEASE = 1;
+const sf::Event::EventType KeyboardEvent::KEY_RELEASE = sf::Event::KeyReleased;
 
 //CONSTRUCTEURS
 //------------------------------------------------------------------------------
-KeyEvent::KeyEvent(int event, int keyCode) : event_ (event), keyCode_ (keyCode)
+KeyboardEvent::KeyboardEvent(sf::Event event, sf::Keyboard::Key keyCode) : event_ (event), keyCode_ (keyCode)
 {}
 
 //DESTRUCTEUR
 //------------------------------------------------------------------------------
-KeyEvent::~KeyEvent()
+KeyboardEvent::~KeyboardEvent()
 {}
+/*
+//METHODES
+//------------------------------------------------------------------------------
+string KeyboardEvent::toString() const
+{
+	stringstream sst;
+	sst <<"KeyboardEvent [event=" << event_ << ", keyCode=" << keyCode_ << "]";
+	return sst.str();
+}*/
 
 //ACCESSEURS
 //------------------------------------------------------------------------------
-int KeyEvent::getEvent() const
+sf::Event KeyboardEvent::getEvent() const
 {
 	return event_;
 }
 
 //------------------------------------------------------------------------------
-int KeyEvent::getKeyCode() const
+sf::Keyboard::Key KeyboardEvent::getKeyCode() const
 {
 	return keyCode_;
 }
 
 //MUTATEURS
 //------------------------------------------------------------------------------
-void KeyEvent::setEvent(int event)
+void KeyboardEvent::setEvent(sf::Event event)
 {
 	event_ = event;
 }
 
 //------------------------------------------------------------------------------
-void KeyEvent::setKeyCode(int keyCode)
+void KeyboardEvent::setKeyCode(sf::Keyboard::Key keyCode)
 {
 	keyCode_ = keyCode;
-}
-
-//AUTRES METHODES
-//------------------------------------------------------------------------------
-string KeyEvent::toString() const
-{
-	stringstream sst;
-	sst <<"KeyEvent [event=" << event_ << ", keyCode=" << keyCode_ << "]";
-	return sst.str();
 }

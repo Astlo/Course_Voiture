@@ -9,42 +9,19 @@
 #define INPUTENGINE_HPP
 #pragma once
 
-#include <iostream>
 #include <vector> //pour le type std::vector
+#include <iostream>
+
+#include "IKeySubject.hpp"
+#include "IKeyObserver.hpp"
+#include "KeyboardEvent.hpp"
 
 /******************************************************************************/
-class InputEngine /*: public InputAdapter*/ : public KeyObservable
+class InputEngine : public IKeySubject
 {
 	public:
-	
-	//Constantes
-		/** --------------------------------------------------------------------
-		 * Codes LIBGDX des touches clavier pour le joueur 1.
-		**/
-		static const int KEY_UP1;
-		static const int KEY_DOWN1;
-		static const int KEY_LEFT1;
-		static const int KEY_RIGHT1;
-
-		/** --------------------------------------------------------------------
-		 * Codes LIBGDX des touches clavier pour le joueur 2.
-		**/
-		static const int KEY_UP2;
-		static const int KEY_DOWN2;
-		static const int KEY_LEFT2;
-		static const int KEY_RIGHT2;
-
-		/** --------------------------------------------------------------------
-		 * Code LIBGDX pour escape.
-		**/
-		static const int KEY_ESCAPE;
-
-		/** --------------------------------------------------------------------
-		 * Nombre maximum de touches claviers gérées.
-		**/
-		static const int MAX_KEYS;
 		
-	//Constructeur et destructeur;
+	//Constructeur et destructeur
 		/** --------------------------------------------------------------------
 		 * @brief Constructeur d'un moteur de clavier
 		 *
@@ -62,24 +39,23 @@ class InputEngine /*: public InputAdapter*/ : public KeyObservable
 
 	//Méthodes interface
 	
-		void addObs(KeyObserver * o);
+		virtual void addObs(IKeyObserver *ptr_obs);
 		
-		void removeObs(KeyObserver * o);
+		virtual void removeObs(IKeyObserver *ptr_obs);
 
-		void notifyObs(const KeyEvent * event);
-		
-/*
-		boolean keyDown(int keycode);
+		virtual void notifyObs(KeyboardEvent *ptr_event);
 
-		boolean keyUp(int keycode);
-*/	
+		bool keyDown(sf::Keyboard::Key keycode);
+
+		bool keyUp(sf::Keyboard::Key keycode);
+	
 	private:
 	
 	//Attributs
 		/**
 		 * Liste des observateurs 
 		**/
-		vector<IKeyObserver> obs_;
+		std::vector<IKeyObserver*> obs_;
 		
 	//Autres méthodes
 		/**
@@ -89,11 +65,9 @@ class InputEngine /*: public InputAdapter*/ : public KeyObservable
 		 *
 		 * @return la position de o dans obs_
 		 * 
-		 * @b Complexité O()
+		 * @b Complexité O(n), n étant la taille de obs_
 		**/
-		int positionObs(const IKeyObserver * o) const;
-		
-		bool equals(const IKeyObserver * o) const;
+//		int positionObs(IKeyObserver *ptr_obs);
 		
 }; //class InputEngine
 /******************************************************************************/

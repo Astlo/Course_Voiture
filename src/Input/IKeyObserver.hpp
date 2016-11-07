@@ -9,6 +9,8 @@
 #define IKEYOBSERVER_HPP
 #pragma once
 
+#include "KeyboardEvent.hpp"
+
 /******************************************************************************/
 class IKeyObserver
 {
@@ -22,7 +24,7 @@ class IKeyObserver
 		 *
 		 * @b Complexité O();
 		 */
-		virtual void keyEvent(KeyEvent * event) = 0;
+		virtual void keyboardEvent(KeyboardEvent *ptr_event) = 0; //actualiser(Data donnee)
 
 }; //class IKeyObserver
 /******************************************************************************/

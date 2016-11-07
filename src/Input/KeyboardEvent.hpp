@@ -1,17 +1,19 @@
 /**
- * @file KeyEvent.hpp
+ * @file KeyboardEvent.hpp
  * @author HUNAULT Marion & LE BARS Yannis
  * @brief Identifie un événement clavier.
 **/
 
-#ifndef KEYEVENT_HPP
-#define KEYEVENT_HPP
+#ifndef KEYBOARDEVENT_HPP
+#define KEYBOARDEVENT_HPP
 #pragma once
 
 #include <string> // pour le type std::string
 
+#include <SFML/Window.hpp>
+
 /******************************************************************************/
-class KeyEvent
+class KeyboardEvent
 {
 	public:
 	
@@ -19,12 +21,12 @@ class KeyEvent
 		/** --------------------------------------------------------------------
 		 * Evénement : une touche a été enfoncée.
 		**/
-		static const int KEY_PRESSE; //KEY_DOWN
+		static const sf::Event::EventType KEY_PRESSE; //KEY_DOWN
 
 		/** --------------------------------------------------------------------
 		 * Evénement : une touche a été relâchée.
 		**/
-		static const int KEY_RELEASE;
+		static const sf::Event::EventType KEY_RELEASE;
 		
 	//Constructeur et destructeur
 		/** --------------------------------------------------------------------
@@ -35,7 +37,7 @@ class KeyEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		KeyEvent(int event, int keyCode);
+		KeyboardEvent(sf::Event event, sf::Keyboard::Key keyCode);
 		
 		/** --------------------------------------------------------------------
 		 * @brief Constructeur d'un événement clavier
@@ -45,7 +47,17 @@ class KeyEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		~KeyEvent();
+		~KeyboardEvent();
+	
+	//Méthode
+		/** --------------------------------------------------------------------
+		 * @brief Affichage de l'événement clavier
+		 * 
+		 * @return une chaine de caractère comprenant l'affichage de l'événement clavier
+		 * 
+		 * @b Complexité O(1)
+		**/	
+		//std::string toString() const;
 
 	//Accesseur et Mutateur
 		/** --------------------------------------------------------------------
@@ -55,7 +67,7 @@ class KeyEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		int getEvent() const;
+		sf::Event getEvent() const;
 		
 		/** --------------------------------------------------------------------
 		 * @brief Accesseur du code de la touche.
@@ -64,7 +76,7 @@ class KeyEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		int getKeyCode() const;
+		sf::Keyboard::Key getKeyCode() const;
 		
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur du type de l'événement.
@@ -73,7 +85,7 @@ class KeyEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		void setEvent(int event);
+		void setEvent(sf::Event event);
 		
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur du code de la touche.
@@ -82,17 +94,7 @@ class KeyEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		void setKeyCode(int keyCode);
-
-	//Autres méthodes
-		/** --------------------------------------------------------------------
-		 * @brief Affichage de l'événement clavier
-		 * 
-		 * @return une chaine de caractère comprenant l'affichage de l'événement clavier
-		 * 
-		 * @b Complexité O(1)
-		**/	
-		std::string toString() const;
+		void setKeyCode(sf::Keyboard::Key keyCode);
 	
 	private:
 	
@@ -100,14 +102,14 @@ class KeyEvent
 		/**
 		 * Type de l'événement.
 		**/
-		int event_;
+		sf::Event event_;
 
 		/**
 		 * Code de la touche.
 		**/
-		int keyCode_;
+		sf::Keyboard::Key keyCode_;
 
-}; //class KeyEvent
+}; //class KeyboardEvent
 /******************************************************************************/
 
-#endif // KEYEVENT_HPP
+#endif // KEYBOARDEVENT_HPP

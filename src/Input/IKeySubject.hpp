@@ -9,6 +9,9 @@
 #define IKEYSUBJECT_HPP
 #pragma once
 
+#include "IKeyObserver.hpp"
+#include "KeyboardEvent.hpp"
+
 /******************************************************************************/
 class IKeySubject
 {
@@ -20,9 +23,9 @@ class IKeySubject
 		 *
 		 * @param o Observateur d'événements clavier à ajouter
 		 *
-		 * @b Complexité O()
+		 * @b Complexité O(1)
 		**/
-		virtual void addObs(KeyObserver * o) = 0;
+		virtual void addObs(IKeyObserver *ptr_obs) = 0; // enregistrerObs(Observer o)
 
 		/** --------------------------------------------------------------------
 		 * @brief Supprimer un observateur d'événements clavier
@@ -31,7 +34,7 @@ class IKeySubject
 		 *
 		 * @b Complexité O()
 		**/
-		virtual void removeObs(KeyObserver * o) = 0;
+		virtual void removeObs(IKeyObserver *ptr_obs) = 0; //supprimerObs (Observer o)
 
 		/** --------------------------------------------------------------------
 		 * @brief Notifier les observateur d'événements clavier
@@ -40,7 +43,7 @@ class IKeySubject
 		 *
 		 * @b Complexité O()
 		**/
-		virtual void notifyObs(KeyEvent * event) = 0;
+		virtual void notifyObs(KeyboardEvent *ptr_event) = 0; //notifierObs()
 
 }; //class IKeySubject
 /******************************************************************************/
