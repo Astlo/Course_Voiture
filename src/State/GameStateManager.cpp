@@ -18,11 +18,11 @@ using namespace std;
 
 GameStateManager::GameStateManager(GraphicsEngine *ptr_graphicsEngine, GameData *ptr_gameData, /*GameState *ptr_menuState,*/ IKeySubject *ptr_subject) : ptr_graphicsEngine_(ptr_graphicsEngine), ptr_gameData_(ptr_gameData), ptr_subject_(ptr_subject)
 {
-ptr_startRaceState_ = new StartRaceState(this);
-ptr_raceState_ = new RaceState(this);
-ptr_endRaceState_ = new EndRaceState(this);
-ptr_menuState_ = new MenuState(this);
-ptr_gameState_ = ptr_menuState_;
+	ptr_menuState_ = new MenuState(this);
+	ptr_raceState_ = new RaceState(this);
+	ptr_startRaceState_ = new StartRaceState(this);
+	ptr_endRaceState_ = new EndRaceState(this);
+	ptr_gameState_ = ptr_menuState_;
 }
 
 GameStateManager::~GameStateManager()
@@ -64,6 +64,7 @@ void GameStateManager::setRaceState()
 void GameStateManager::setStartRaceState()
 {
 	ptr_gameState_ = ptr_startRaceState_;
+	ptr_startRaceState_->init();
 }
 		
 void GameStateManager::setEndRaceState()
@@ -106,7 +107,7 @@ void GameStateManager::setEndRaceState()
 		}
 	}
 */
-void GameStateManager::update(double deltaTime)
+void GameStateManager::update(int deltaTime)
 {
 	if (ptr_gameState_ != NULL)
 	{
@@ -122,7 +123,7 @@ void GameStateManager::draw()
 	}
 }
 
-void GameStateManager::keyEvent(KeyboardEvent *ptr_event)
+void GameStateManager::keyboardEvent(KeyboardEvent *ptr_event)
 {
 	if (ptr_gameState_ != NULL)
 	{

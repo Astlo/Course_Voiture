@@ -4,13 +4,14 @@
 #include "AIController.hpp"
 
 #include <cmath>
+#include <iostream>
 
 #include "IController.hpp"
 #include "../Point.hpp"
 #include "../Data/GameData.hpp"
 #include "../Data/AICar.hpp"
 #include "../State/GameStateManager.hpp"
-#include "../Constants.hpp"
+//#include "../Constants.hpp"
 
 #define PI 3.14159265
 
@@ -25,6 +26,7 @@ AIController::AIController(IController *ptr_icontroller) : Decorator(ptr_icontro
 void AIController::update(int player, GameStateManager *ptr_gameStateManager)
 {
 	// Décoration avant.
+
 	beforeUpdate(player, ptr_gameStateManager);
 	ptr_icontroller->update(player, ptr_gameStateManager);
 	// Décoration après.
@@ -52,22 +54,29 @@ void AIController::afterUpdate(int player, GameStateManager *ptr_gameStateManage
 	ptr_aiCar->setPositionTrajectoire(ptr_aiCar->getPositionTrajectoire() + n);
 
 	// Contrôle en bout de trajectoire.
-	if (ptr_aiCar->getPositionTrajectoire() >= ptr_gameStateManager->getGameData()->getNbPointsTrajectoiresIA(player - GameData::VOITURE_JOUEUR_IA_0)) {
+	if (ptr_aiCar->getPositionTrajectoire() >= ptr_gameStateManager->getGameData()->getNbPointsTrajectoiresIA(player - GameData::VOITURE_JOUEUR_IA_0)) 
+	{
 		ptr_aiCar->setPositionTrajectoire(ptr_aiCar->getPositionTrajectoire() - ptr_gameStateManager->getGameData()->getNbPointsTrajectoiresIA(player - GameData::VOITURE_JOUEUR_IA_0));
 	}
 
 	// Re-positionner la voiture.
-	Point *ptr_t[ptr_gameStateManager->getGameData()->getNbPointsTrajectoiresIA(player)];
-	int pos = player - GameData::VOITURE_JOUEUR_IA_0;
+/*	Point *ptr_t[ptr_gameStateManager->getGameData()->getNbPointsTrajectoiresIA(player)];
 	for(int i = 0; i < ptr_gameStateManager->getGameData()->getNbPointsTrajectoiresIA(player) ; ++i)
 	{
 		ptr_t[i] = ptr_gameStateManager->getGameData()->getUnPointTrajectoireIA(pos, i);
+	}*/
+	
+	Point* ptr_t[MAX_TRAJECTOIRE];
+	int pos = player - GameData::VOITURE_JOUEUR_IA_0;
+	for(int j = 0; j<MAX_TRAJECTOIRE; ++j)
+	{
+		ptr_t[j] = ptr_gameStateManager->getGameData()->getUnPointTrajectoireIA(pos, j);
 	}
-	ptr_aiCar->getPoint().setX(ptr_t[ptr_aiCar->getPositionTrajectoire()]->getX());
-	ptr_aiCar->getPoint().setY(ptr_t[ptr_aiCar->getPositionTrajectoire()]->getY());
+	ptr_aiCar->setPoint(Point(ptr_t[ptr_aiCar->getPositionTrajectoire()]->getX(),ptr_t[ptr_aiCar->getPositionTrajectoire()]->getY()));
 
 	// Ajuster l'angle si on a bougé.
-	if (ptr_aiCar->getPoint().getX() != ptr_aiCar->getOldPoint().getX() || ptr_aiCar->getPoint().getY() != ptr_aiCar->getOldPoint().getY()) {
+	if (ptr_aiCar->getPoint().getX() != ptr_aiCar->getOldPoint().getX() || ptr_aiCar->getPoint().getY() != ptr_aiCar->getOldPoint().getY()) 
+	{
 		// Calcul de l'angle par rapport à la position précédente.
 		double angle = (asin((ptr_aiCar->getPoint().getY() - ptr_aiCar->getOldPoint().getY()) / (abs(ptr_aiCar->getPoint().getX() - ptr_aiCar->getOldPoint().getX())*abs(ptr_aiCar->getPoint().getX() - ptr_aiCar->getOldPoint().getX())+abs(ptr_aiCar->getPoint().getY() - ptr_aiCar->getOldPoint().getY())*abs(ptr_aiCar->getPoint().getY() - ptr_aiCar->getOldPoint().getY()))))*180/PI;
 

@@ -9,11 +9,16 @@
 #define GAMEENGINE_HPP
 #pragma once
 
-
+/*
 #include "../Graphics/GraphicsEngine.hpp"
 #include "../State/GameStateManager.hpp"
-#include "../Input/InputEngine.hpp"
 #include "../Data/GameData.hpp" 
+#include "../Input/InputEngine.hpp"*/
+
+class GraphicsEngine;
+class GameStateManager;
+class GameData;
+class InputEngine;
 
 /**************************************************************************** */
 class GameEngine
@@ -22,8 +27,8 @@ class GameEngine
 		GameEngine();
 		~GameEngine();
 
-		void execute();
 		void create();
+		void execute();
 		void render();
 
 	private:

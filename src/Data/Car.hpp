@@ -58,7 +58,7 @@ class Car
 		 *
 		 * @b Complexité O(1)
 		**/
-		Point getPoint() const;
+		Point& getPoint();
 		
 		/** --------------------------------------------------------------------
 		 * @brief Accesseur de la position précédente de la voiture.
@@ -67,7 +67,7 @@ class Car
 		 *
 		 * @b Complexité O(1)
 		**/
-		Point getOldPoint() const;
+		Point& getOldPoint();
 		
 		/** --------------------------------------------------------------------
 		 * @brief Accesseur de la vitesse de progression de la voiture.

@@ -26,6 +26,13 @@ class GraphicsEngine
 		/** Indice voiture violette. */
 		static const int VOITURE_VIOLETTE;
 
+
+		static int ECRAN_LARGEUR;
+		static int ECRAN_HAUTEUR;
+		static int VOITURE_HAUTEUR;
+		static int VOITURE_LARGEUR;
+		static int DISTANCE_COLLISION;
+
 		GraphicsEngine();
 		~GraphicsEngine();
 
@@ -35,11 +42,11 @@ class GraphicsEngine
 		sf::Texture* getTextureCircuit();
 		sf::Texture* getTextureObstacles();
 		sf::Texture* getTextureTrajectoireIA();
-		sf::Texture* getTextureBord();
+		sf::Texture* getTextureSecteurs();
 		sf::Texture* getOneTextureCar(unsigned indice);
 		sf::Sprite* getOneSpriteCar(unsigned indice);
 
-		sf::Font getFont();
+		sf::Font& getFont();
 
 		sf::RenderWindow* getRenderWindow();
 
@@ -55,10 +62,10 @@ class GraphicsEngine
 		sf::Texture *ptr_textureCircuit_;
 		/** Map de pixels du masque des obstacles. */
 		sf::Texture *ptr_textureObstacles_;
-		/** Map de pixels des trajectoires IA. */
+		/** Texture des trajectoires IA. */
 		sf::Texture *ptr_textureTrajectoireIA_;
-
-		sf::Texture *ptr_textureBord_;
+		/** Texture des secteurs. */
+		sf::Texture *ptr_textureSecteurs_;
 
 		sf::Font font_;
 

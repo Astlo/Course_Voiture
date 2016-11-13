@@ -8,10 +8,8 @@
 
 #include <cmath> //pour les fonctions mathématiques
 #include <sstream> //pour les conversions en chaine
+ #include <iostream>
 
-
-#include "../Constants.hpp"
-#include "../Point.hpp"
 #include "AICar.hpp"
 #include "Car.hpp"
 
@@ -20,16 +18,16 @@ using namespace std;
 
 //CONSTANTES
 //------------------------------------------------------------------------------
-const int VOITURE_JOUEUR_0 = 0;
+const int GameData::VOITURE_JOUEUR_0 = 0;
 
 //------------------------------------------------------------------------------
-const int VOITURE_JOUEUR_1 = 1;
+const int GameData::VOITURE_JOUEUR_1 = 1;
 
 //------------------------------------------------------------------------------
-const int VOITURE_JOUEUR_IA_0 = 2;
+const int GameData::VOITURE_JOUEUR_IA_0 = 2;
 
 //------------------------------------------------------------------------------
-const int VOITURE_JOUEUR_IA_1 = 3;
+const int GameData::VOITURE_JOUEUR_IA_1 = 3;
 
 //CONSTRUCTEUR
 //------------------------------------------------------------------------------
@@ -39,16 +37,19 @@ GameData::GameData()
 	ptr_cars_[VOITURE_JOUEUR_1] = new Car();
 	ptr_cars_[VOITURE_JOUEUR_IA_0] = new AICar();
 	ptr_cars_[VOITURE_JOUEUR_IA_1] = new AICar();
+	//tableau = new int[ MAX_JOUEUR_IA ]; 
+
+
 }
 
 //DESTRUCTEUR
 //------------------------------------------------------------------------------
 GameData::~GameData() 
 {
-	delete ptr_cars_[VOITURE_JOUEUR_0];
+	/*delete ptr_cars_[VOITURE_JOUEUR_0];
 	delete ptr_cars_[VOITURE_JOUEUR_1];
 	delete ptr_cars_[VOITURE_JOUEUR_IA_0];
-	delete ptr_cars_[VOITURE_JOUEUR_IA_1];
+	delete ptr_cars_[VOITURE_JOUEUR_IA_1];*/
 }
 
 //METHODES
@@ -65,7 +66,6 @@ void GameData::reset()
 //------------------------------------------------------------------------------
 int GameData::calculeTrajectoire(sf::Image & image, int xDebut, int yDebut, Point *ptr_t[]) 
 {
-		//sf::Color color = new Color();
 		int r = 0;
 		int g = 0;
 		int b = 0;
@@ -101,6 +101,7 @@ int GameData::calculeTrajectoire(sf::Image & image, int xDebut, int yDebut, Poin
 			}
 			ptr_t[i++] = ptr_trouve;
 		} while (ptr_trouve != NULL);
+		cout << i << endl;
 		return --i;
 }
 
@@ -177,6 +178,11 @@ Point* GameData::getUnPointTrajectoireIA (int i, int j)
 		Point *ptr_point;
 		ptr_point = new Point(trajectoiresIA_[i][j].getX(), trajectoiresIA_[i][j].getY());
 		return ptr_point;
+}
+
+void GameData::setUnPointTrajectoireIA(int i, int j, Point point)
+{
+	trajectoiresIA_[i][j] = point;
 }
 
 //------------------------------------------------------------------------------

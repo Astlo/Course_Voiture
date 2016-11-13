@@ -8,6 +8,7 @@
 #include "StartRaceState.hpp"
 #include <sstream> //pour les conversions en chaine
 #include <cmath>
+#include <iostream>
 
 #include "GameStateManager.hpp"
 #include "RaceState.hpp"
@@ -21,6 +22,7 @@
 #include "../Input/KeyboardEvent.hpp"
 #include "../Data/GameData.hpp"
 #include "../Data/Car.hpp"
+#include "../Graphics/GraphicsEngine.hpp"
 
 using namespace std;
 
@@ -34,7 +36,7 @@ StartRaceState::~StartRaceState()
 
 void StartRaceState::init()
 {
-	decompte = 4;
+	decompte = 240;
 	getGameStateManager()->getGameData()->reset();
 	// Placer les voitures sur la ligne de départ.
 	for (int i = 0; i < MAX_VOITURES; ++i)
@@ -42,13 +44,11 @@ void StartRaceState::init()
 		Car *ptr_car = getGameStateManager()->getGameData()->getOneCar(i);
 		if (i < GameData::VOITURE_JOUEUR_IA_0)
 		{
-			ptr_car->getPoint().setX(X_BASE_TRAJECTOIRE - 80);
-			ptr_car->getPoint().setY(Y_BASE_TRAJECTOIRE + (i % 2) * 50 - 25);
+			ptr_car->setPoint(Point(X_BASE_TRAJECTOIRE - GraphicsEngine::VOITURE_LARGEUR*2,Y_BASE_TRAJECTOIRE + (i % 2) * GraphicsEngine::VOITURE_HAUTEUR*2));
 		}
 		else
 		{
-			ptr_car->getPoint().setX(X_BASE_TRAJECTOIRE);
-			ptr_car->getPoint().setY(Y_BASE_TRAJECTOIRE + (i % 2) * 50 - 25);
+			ptr_car->setPoint(Point(X_BASE_TRAJECTOIRE, Y_BASE_TRAJECTOIRE + (i % 2) * 53));
 		}
 	}
 }
@@ -59,19 +59,19 @@ void StartRaceState::draw()
 		// Afficher le décompte.
 
 		//getGameStateManager()->getGraphicsEngine()->getFont()->draw(spriteBatch, String.valueOf((int)decompte), ECRAN_LARGEUR / 2 - 100, ECRAN_HAUTEUR / 2 + 100);
-		
-		stringstream ss;
-		ss << (int)decompte;
-		string str = ss.str();
+			stringstream ss;
+			ss << (int)(decompte / 60);
+			string str = ss.str();
+			sf::Text text(str, getGameStateManager()->getGraphicsEngine()->getFont());
+			text.setCharacterSize(200);
+			text.setFillColor(sf::Color::Red);
+			text.setPosition(500,500);
+			getGameStateManager()->getGraphicsEngine()->getRenderWindow()->draw(text);
 
-		sf::Text text(str, getGameStateManager()->getGraphicsEngine()->getFont());
-		text.setCharacterSize(200);
-		text.setFillColor(sf::Color::Red);
-		text.setPosition(ECRAN_LARGEUR / 2 - 100,ECRAN_HAUTEUR / 2 - 100);
 
 }
 
-void StartRaceState::update(double deltaTime)
+void StartRaceState::update(int deltaTime)
 {
 		// Décompter (deltaTime est une fraction de seconde) puis démarrer la course en changeant l'état.
 		decompte -= deltaTime;

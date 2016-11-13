@@ -37,7 +37,7 @@ class KeyboardEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		KeyboardEvent(sf::Event event, sf::Keyboard::Key keyCode);
+		KeyboardEvent(sf::Event::EventType event, sf::Keyboard::Key keyCode);
 		
 		/** --------------------------------------------------------------------
 		 * @brief Constructeur d'un événement clavier
@@ -67,7 +67,7 @@ class KeyboardEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		sf::Event getEvent() const;
+		sf::Event::EventType getEvent() const;
 		
 		/** --------------------------------------------------------------------
 		 * @brief Accesseur du code de la touche.
@@ -85,7 +85,7 @@ class KeyboardEvent
 		 *
 		 * @b Complexité O(1)
 		**/
-		void setEvent(sf::Event event);
+		void setEvent(sf::Event::EventType event);
 		
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur du code de la touche.
@@ -102,7 +102,7 @@ class KeyboardEvent
 		/**
 		 * Type de l'événement.
 		**/
-		sf::Event event_;
+		sf::Event::EventType event_;
 
 		/**
 		 * Code de la touche.

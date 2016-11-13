@@ -8,9 +8,9 @@
 
 #include <sstream> //pour les conversions en chaine
 
-#include "Car.hpp"
-#include "../Constants.hpp"
-#include "../Point.hpp"
+//#include "Car.hpp"
+//#include "../Constants.hpp"
+//#include "../Point.hpp"
 
 
 using namespace std;

@@ -22,7 +22,7 @@ const sf::Event::EventType KeyboardEvent::KEY_RELEASE = sf::Event::KeyReleased;
 
 //CONSTRUCTEURS
 //------------------------------------------------------------------------------
-KeyboardEvent::KeyboardEvent(sf::Event event, sf::Keyboard::Key keyCode) : event_ (event), keyCode_ (keyCode)
+KeyboardEvent::KeyboardEvent(sf::Event::EventType event, sf::Keyboard::Key keyCode) : event_ (event), keyCode_ (keyCode)
 {}
 
 //DESTRUCTEUR
@@ -41,7 +41,7 @@ string KeyboardEvent::toString() const
 
 //ACCESSEURS
 //------------------------------------------------------------------------------
-sf::Event KeyboardEvent::getEvent() const
+sf::Event::EventType KeyboardEvent::getEvent() const
 {
 	return event_;
 }
@@ -54,7 +54,7 @@ sf::Keyboard::Key KeyboardEvent::getKeyCode() const
 
 //MUTATEURS
 //------------------------------------------------------------------------------
-void KeyboardEvent::setEvent(sf::Event event)
+void KeyboardEvent::setEvent(sf::Event::EventType event)
 {
 	event_ = event;
 }

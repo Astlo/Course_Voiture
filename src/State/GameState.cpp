@@ -30,3 +30,8 @@ GameStateManager* GameState::getGameStateManager()
 {
 	return ptr_gameStateManager_;
 }
+
+void GameState::keyboardEvent(KeyboardEvent *ptr_event)
+{
+	ptr_gameStateManager_->keyboardEvent(ptr_event);
+}

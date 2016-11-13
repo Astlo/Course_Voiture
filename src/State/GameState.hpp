@@ -29,7 +29,7 @@ class GameState : public IKeyObserver
 		 *
 		 * @b Complexité O()
 		**/
-		virtual void init() =0;
+		virtual void init() = 0;
 
 		/** --------------------------------------------------------------------
 		 * @brief Affichage de l'état.
@@ -38,7 +38,7 @@ class GameState : public IKeyObserver
 		 *
 		 * @b Complexité O()
 		**/
-		virtual void draw() =0; //Doit être autre chose pour notre bibliothèque
+		virtual void draw() = 0; //Doit être autre chose pour notre bibliothèque
 
 		/** --------------------------------------------------------------------
 		 * @brief Mise à jour de l'état du jeu.
@@ -47,7 +47,10 @@ class GameState : public IKeyObserver
 		 *
 		 * @b Complexité O()
 		**/
-		virtual void update(double deltaTime) =0; //float deltaTime
+		virtual void update(int deltaTime) = 0; //float deltaTime
+
+
+		void keyboardEvent(KeyboardEvent *ptr_event); // actualiser(donee)
 
 	//Accesseur
 		/** --------------------------------------------------------------------

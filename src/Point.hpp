@@ -33,7 +33,7 @@ class Point
 		 *
 		 * @b Complexité O(1)
 	     */
-		Point(unsigned x, unsigned y);
+		Point(int x, int y);
 
 		/** --------------------------------------------------------------------
 		 * @brief Destructeur d'un point
@@ -67,7 +67,7 @@ class Point
 		 * 
 		 * @b Complexité O(1)
 		**/
-		void deplacer(unsigned dx, unsigned dy);
+		void deplacer(int dx, int dy);
 		
 		/** --------------------------------------------------------------------
 		 * @brief Renvoie la distance entre deux points this et autre
@@ -99,7 +99,7 @@ class Point
 		 *
 		 * @b Complexité O(1)
 		 */
-		unsigned getX() const;
+		int getX() const;
 
 		/** --------------------------------------------------------------------
 		 * @brief Accesseur de l'ordonnée du point
@@ -108,7 +108,7 @@ class Point
 		 *
 		 * @b Complexité O(1)
 		 */
-		unsigned getY() const;
+		int getY() const;
 		
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur de l'abscisse du point
@@ -119,7 +119,7 @@ class Point
 		 *
 		 * @b Complexité O(1)
 		 */
-		void setX(unsigned x);
+		void setX(int x);
 		
 		/** --------------------------------------------------------------------
 		 * @brief Mutateur de l'ordonnée du point
@@ -130,7 +130,7 @@ class Point
 		 *
 		 * @b Complexité O(1)
 		 */
-		void setY(unsigned y);
+		void setY(int y);
 		
 	private:
 	
@@ -138,11 +138,11 @@ class Point
 		/**
 		 * L'abscisse du point
 		**/
-		unsigned x_;
+		int x_;
 		/**
 		 * L'ordonnée du point
 		**/
-		unsigned y_;
+		int y_;
 
 }; // class Point
 /**************************************************************************** */

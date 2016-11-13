@@ -12,7 +12,6 @@
 
 #include "Car.hpp"
 #include "../Constants.hpp"
-#include "../Point.hpp"
 
 /******************************************************************************/
 class AICar : public Car
@@ -40,7 +39,7 @@ class AICar : public Car
 		 *
 		 * @b Complexité O(1)
 		**/
-		virtual void reset();
+		void reset();
 		
 		/** --------------------------------------------------------------------
 		 * @brief Affichage de la voiture.

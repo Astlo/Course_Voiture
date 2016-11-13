@@ -18,16 +18,22 @@ Pixmap;
 
 #include <SFML/Graphics.hpp>
 
-#include "Car.hpp"
-#include "../Constants.hpp"
+/*#include "Car.hpp"*/
 #include "../Point.hpp"
+#include "../Constants.hpp"
+
+
+class Car;
+class AICar;
+
+//Constantes
+
+
 
 /*****************************************************************************/
 class GameData
 {
 	public:
-	
-	//Constantes
 		/**
 		 * Indice de la voiture du premier joueur.
 		**/
@@ -149,6 +155,7 @@ class GameData
 		 * @b Complexité O()
 		 */
 		int getNbPointsTrajectoiresIA (int player);
+		void setUnPointTrajectoireIA(int i, int j, Point point);
 		
 		/**--------------------------------------------------------------------
 		 * @brief Accesseur du vainqueur de la course.

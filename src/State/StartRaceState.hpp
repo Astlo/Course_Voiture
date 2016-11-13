@@ -26,9 +26,9 @@ class StartRaceState : public RaceState
 
 		void draw();
 
-		void update(double deltaTime);
+		void update(int deltaTime);
 	
-	protected:
+	//protected:
 	
 	//Constructeur et destructeur
 		/** --------------------------------------------------------------------
@@ -53,7 +53,7 @@ class StartRaceState : public RaceState
 		/**
 		 * Indicateur de décompte pour le départ.
 		**/
-		double decompte;
+		int decompte;
 		
 }; //class StartRaceState
 /******************************************************************************/

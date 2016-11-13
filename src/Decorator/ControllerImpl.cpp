@@ -7,8 +7,12 @@
 #include <cmath>
 
 #include "../Data/Car.hpp"
-#include "../States/GameStateManager.hpp"
+#include "../State/GameStateManager.hpp"
 #include "../Constants.hpp"
+#include "../Graphics/GraphicsEngine.hpp"
+#include "../Data/GameData.hpp"
+
+#define PI 3.14159265
 
 using namespace std;
 
@@ -17,11 +21,11 @@ using namespace std;
 void ControllerImpl::update(int player, GameStateManager *ptr_gameStateManager)
 {
 	//Voiture voiture = gameStateManager->getGameModel()->getVoitures()[player];
-	Voiture *ptr_car = ptr_gameStateManager->getGameData()->getOneCar(player);
+	Car *ptr_car = ptr_gameStateManager->getGameData()->getOneCar(player);
 	ptr_car->getOldPoint().setX((int) ptr_car->getPoint().getX());
 	ptr_car->getOldPoint().setY((int) ptr_car->getPoint().getY());
 
-	bool enObstacle = ptr_car->getEtatGlissade() != || ptr_car->getEtatSaut() != 0;
+	bool enObstacle = ptr_car->getEtatGlissade() != 0 || ptr_car->getEtatSaut() != 0;
 
 	// Si on a appuyé sur flêche haut et que la vitesse n'est pas au maximum et qu'on est ni en glissade, ni en saut, alors on accélère.
 	if (ptr_car->isAccelere() && !enObstacle && ptr_car->getVitesse() < (ptr_car->getSecteur() == 0 ? VITESSE_HORS_PISTE : VITESSE_AVANT_MAXI)) 
@@ -53,31 +57,28 @@ void ControllerImpl::update(int player, GameStateManager *ptr_gameStateManager)
 
 	// Si on a appuyé sur gauche et que la vitesse n'est pas nulle, alors on tourne à gauche (augmentation de l'angle)
 	if (ptr_car->isLeft() && !enObstacle && ptr_car->getVitesse() != 0) {
-		ptr_car->setAngle((ptr_car->getAngle() + c) % 360);
+		ptr_car->setAngle((int)(ptr_car->getAngle() + c) % 360);
 	}
 	// Si on a appuyé sur droite et que la vitesse n'est pas nulle, alors on tourne à droite (diminution de l'angle)
 	if (ptr_car->isRight() && !enObstacle && ptr_car->getVitesse() != 0) {
-		ptr_car->setAngle((ptr_car->getAngle() - c) % 360);
+		ptr_car->setAngle((int)(ptr_car->getAngle() - c) % 360);
 	}
 
 	// Calculer le nouveau point d'arrivée en fonction du vecteur donné par l'angle et la vitesse.
 	double x = ptr_car->getPoint().getX();
 	double y = ptr_car->getPoint().getY();
-	double angleRadian = Math.toRadians(ptr_car->getAngle());
-	ptr_car->getPoint().setX(x + (ptr_car->getVitesse() * cos(angleRadian)));
-	ptr_car->getPoint().setY(y + (ptr_car->getVitesse() * sin(angleRadian)));
-
+	double angleRadian = (ptr_car->getAngle()*PI)/180;
+	ptr_car->setPoint(Point(x + (ptr_car->getVitesse() * cos(angleRadian)),y + (ptr_car->getVitesse() * sin(angleRadian))));
 	// Si on sort des limites du jeu, on revient à la position précédente.
-	if ((ptr_car->getPoint().getX() < VOITURE_LARGEUR / 2)
-			|| (ptr_car->getPoint().getX() > ECRAN_LARGEUR - (VOITURE_LARGEUR / 2))
-			|| (ptr_car->getPoint().getY() < VOITURE_HAUTEUR / 2)
-			|| (ptr_car->getPoint().getY() > ECRAN_HAUTEUR - (VOITURE_HAUTEUR / 2))) {
-		ptr_car->getPoint().setX(x);
-		ptr_car->getPoint().setY(y);
+	if ((ptr_car->getPoint().getX() < GraphicsEngine::VOITURE_LARGEUR / 2)
+			|| (ptr_car->getPoint().getX() > GraphicsEngine::ECRAN_LARGEUR - (GraphicsEngine::VOITURE_LARGEUR / 2))
+			|| (ptr_car->getPoint().getY() < GraphicsEngine::VOITURE_HAUTEUR / 2)
+			|| (ptr_car->getPoint().getY() > GraphicsEngine::ECRAN_HAUTEUR - (GraphicsEngine::VOITURE_HAUTEUR / 2))) {
+		ptr_car->setPoint(Point(x,y));
 	}
 
 	// Calculer sur quel secteur on est.
-	Color color = ptr_gameStateManager->getGraphicsEngine()->getPixelColorFromPixmap(ptr_gameStateManager->getGraphicsEngine()->getPixmapMasqueCircuit(), (int) ptr_car->getX(), (int) ptr_car->getY());
+	sf::Color color = ptr_gameStateManager->getGraphicsEngine()->getPixelColorFromTexture(ptr_gameStateManager->getGraphicsEngine()->getTextureCircuit(), (int) ptr_car->getPoint().getX(), (int) ptr_car->getPoint().getY());
 	int secteur = ptr_gameStateManager->getGameData()->getSecteurFromColor(color);
 
 	// On mémorise l'ancien secteur.

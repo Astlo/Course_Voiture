@@ -10,30 +10,33 @@
 
 #include <SFML/Window.hpp>
 
+//#define PI 3.14159265
+
 /*****************************************************************************/
 
 /**
  * Coordonnées de base de la trajectoire idéale.
 **/
-const int X_BASE_TRAJECTOIRE = 500;
-const int Y_BASE_TRAJECTOIRE = 128;
+const int X_BASE_TRAJECTOIRE = 670;
+const int Y_BASE_TRAJECTOIRE = 655;
+
 
 /**
  * Hauteur et largeur de l'espace graphique (initialisées par le moteur graphique)
 **/
-int ECRAN_LARGEUR;
-int ECRAN_HAUTEUR;
+//unsigned ECRAN_LARGEUR;
+//unsigned ECRAN_HAUTEUR;
 
 /**
  * Hauteur et largeur des voitures (initialisées par le moteur graphique)
 **/
-int VOITURE_LARGEUR;
-int VOITURE_HAUTEUR;
+//unsigned VOITURE_LARGEUR;
+//unsigned VOITURE_HAUTEUR;
 
 /**
  * Distance entre les voitures à partir de laquelle il y a collision.
 **/
-int DISTANCE_COLLISION;
+//int DISTANCE_COLLISION;
 
 /**
  * Délai pendant lequel la collision n'est plus testée pour permettre de se dégager.
@@ -43,9 +46,9 @@ const int DELAI_COLLISION = 5;
 /**
  * Vitesses
 **/
-const int VITESSE_AVANT_MAXI = 6;
-const int VITESSE_ARRIERE_MAXI = 2;
-const int VITESSE_HORS_PISTE = 1;
+const int VITESSE_AVANT_MAXI = 8;
+const int VITESSE_ARRIERE_MAXI = 4;
+const int VITESSE_HORS_PISTE = 2;
 
 /**
  * Accélération.
@@ -62,7 +65,7 @@ const double DELTA_COEF = (DELTA_ANGLE_VITESSE_MINI - DELTA_ANGLE_VITESSE_MAXI) 
 /**
  * Nombre de secteurs.
 **/
-const int NOMBRE_SECTEURS = 5;
+const int NOMBRE_SECTEURS = 6;
 
 /**
  * Nombre de tours à parcourir dans une course.
@@ -120,7 +123,7 @@ const sf::Keyboard::Key KEY_RIGHT2 = sf::Keyboard::D;
 /** --------------------------------------------------------------------
  * Code SFML pour escape.
 **/
-const int KEY_ESCAPE = sf::Keyboard::Escape;
+const sf::Keyboard::Key KEY_ESCAPE = sf::Keyboard::Escape;
 
 /** --------------------------------------------------------------------
  * Nombre maximum de touches claviers gérées.

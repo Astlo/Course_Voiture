@@ -9,6 +9,7 @@
 #include "IController.hpp"
 #include "../Data/Car.hpp"
 #include "../Data/AICar.hpp"
+#include "../Data/GameData.hpp"
 #include "../State/GameStateManager.hpp"
 #include "../Constants.hpp"
 

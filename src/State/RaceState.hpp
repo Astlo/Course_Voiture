@@ -32,11 +32,11 @@ class RaceState : public GameState
 		 */
 		void drawVoiture(int n);
 
-		void update(double deltaTime);
+		void update(int deltaTime);
 
 		void keyboardEvent(KeyboardEvent *ptr_event);
 	
-	protected:
+	//protected:
 	
 	//Constructeur et destructeur
 		/** --------------------------------------------------------------------

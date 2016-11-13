@@ -10,7 +10,7 @@
 
 #include "../Constants.hpp"
 #include "../Point.hpp"
-
+ 
 using namespace std;
 
 //CONSTRUCTEUR
@@ -65,13 +65,13 @@ void Car::reset()
 
 //ACCESSEURS
 //------------------------------------------------------------------------------
-Point Car::getPoint() const
+Point& Car::getPoint()
 {
 	return point_;
 }
 
 //------------------------------------------------------------------------------
-Point Car::getOldPoint() const
+Point& Car::getOldPoint()
 {
 	return oldPoint_;
 }

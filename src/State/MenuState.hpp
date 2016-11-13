@@ -26,11 +26,11 @@ class MenuState : public GameState
 
 		void draw();
 
-		void update(double deltaTime);
+		void update(int deltaTime);
 
-		void keyEvent(KeyboardEvent *ptr_event);
+		void keyboardEvent(KeyboardEvent *ptr_event);
 	
-	protected:
+	//protected:
 	
 	//Constructeur et destructeur
 		MenuState(GameStateManager *ptr_gameStateManager);

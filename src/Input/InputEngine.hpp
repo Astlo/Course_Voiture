@@ -45,9 +45,9 @@ class InputEngine : public IKeySubject
 
 		virtual void notifyObs(KeyboardEvent *ptr_event);
 
-		bool keyDown(sf::Keyboard::Key keycode);
+		/*bool keyDown(sf::Keyboard::Key keycode);
 
-		bool keyUp(sf::Keyboard::Key keycode);
+		bool keyUp(sf::Keyboard::Key keycode);*/
 	
 	private:
 	

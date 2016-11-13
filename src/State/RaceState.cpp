@@ -9,7 +9,8 @@
  
 #include <sstream> //pour les conversions en chaine
 #include <cmath>
-
+ #include <iostream>
+ 
 #include "../Constants.hpp"
 #include "GameStateManager.hpp"
 #include "../Decorator/IController.hpp"
@@ -20,6 +21,7 @@
 #include "../Input/KeyboardEvent.hpp"
 #include "../Data/GameData.hpp"
 #include "../Data/Car.hpp"
+#include "../Graphics/GraphicsEngine.hpp"
 
 using namespace std;
 
@@ -51,20 +53,31 @@ void RaceState::init()
 void RaceState::draw()
 {
 	sf::Sprite *ptr_spriteCircuit = new sf::Sprite();
-	sf::Sprite *ptr_sprite;
+	sf::Sprite *ptr_spriteObstacles = new sf::Sprite();
+	sf::Sprite *ptr_spriteTrajectoire = new sf::Sprite();
+	//sf::Sprite *ptr_sprite;
 	Car *ptr_car;
+	GraphicsEngine *ptr_graphicsEngine = getGameStateManager()->getGraphicsEngine();
+	//ptr_graphicsEngine->drawSprite(ptr_graphicsEngine->getTextureObstacles(), ptr_spriteObstacles, GraphicsEngine::ECRAN_LARGEUR/2, GraphicsEngine::ECRAN_HAUTEUR/2, GraphicsEngine::ECRAN_LARGEUR/(double)ptr_graphicsEngine->getTextureObstacles()->getSize().x, GraphicsEngine::ECRAN_HAUTEUR/(double)ptr_graphicsEngine->getTextureObstacles()->getSize().y, 0);
+	ptr_graphicsEngine->drawSprite(ptr_graphicsEngine->getTextureTrajectoireIA(), ptr_spriteTrajectoire, GraphicsEngine::ECRAN_LARGEUR/2, GraphicsEngine::ECRAN_HAUTEUR/2, GraphicsEngine::ECRAN_LARGEUR/(double)ptr_graphicsEngine->getTextureTrajectoireIA()->getSize().x, GraphicsEngine::ECRAN_HAUTEUR/(double)ptr_graphicsEngine->getTextureTrajectoireIA()->getSize().y, 0);
+	
 
-	getGameStateManager()->getGraphicsEngine()->drawSprite(getGameStateManager()->getGraphicsEngine()->getTextureCircuit(), ptr_spriteCircuit, 0, 0, 1, 1, 0);
+	//ptr_graphicsEngine->drawSprite(ptr_graphicsEngine->getTextureCircuit(), ptr_spriteCircuit, GraphicsEngine::ECRAN_LARGEUR/2.0, GraphicsEngine::ECRAN_HAUTEUR/2.0, (double)GraphicsEngine::ECRAN_LARGEUR/(double)ptr_graphicsEngine->getTextureCircuit()->getSize().x, (double)GraphicsEngine::ECRAN_HAUTEUR/(double)ptr_graphicsEngine->getTextureCircuit()->getSize().y, 0);
+
+
+	//cout << ptr_graphicsEngine->getTextureCircuit()->getSize().x << " " << ptr_graphicsEngine->getTextureCircuit()->getSize().y << endl;
+	//cout << GraphicsEngine::ECRAN_LARGEUR/(double)ptr_graphicsEngine->getTextureCircuit()->getSize().x << " " << GraphicsEngine::ECRAN_HAUTEUR/(double)ptr_graphicsEngine->getTextureCircuit()->getSize().y << endl;
+	//cout << ptr_graphicsEngine->getTextureCircuit()->getSize().x*GraphicsEngine::ECRAN_LARGEUR/(double)ptr_graphicsEngine->getTextureCircuit()->getSize().x << " " << ptr_graphicsEngine->getTextureCircuit()->getSize().y*GraphicsEngine::ECRAN_HAUTEUR/(double)ptr_graphicsEngine->getTextureCircuit()->getSize().y << endl;
+	//cout << GraphicsEngine::ECRAN_LARGEUR/2 << " " << GraphicsEngine::ECRAN_HAUTEUR/2 << endl;
 
 	// Tableau de bord.
-	for (int i = 0; i < MAX_VOITURES; ++i)
+	/*for (int i = 0; i < MAX_VOITURES; ++i)
 	{
 		ptr_car = getGameStateManager()->getGameData()->getOneCar(i);
 		ptr_sprite = getGameStateManager()->getGraphicsEngine()->getOneSpriteCar(i);
 
-		getGameStateManager()->getGraphicsEngine()->drawSprite(getGameStateManager()->getGraphicsEngine()->getTextureBord(), ptr_sprite, i * 250 + 10, 700, 1.0, 1.0, 0.0);
-		//getGameStateManager()->getGraphicsEngine()->getHeaderFont().draw(spriteBatch, (int) ptr_car->getTour() + " / " + (int) (ptr_car->getVitesse() * 50), i * 250 + 90, 730);
-	}
+		getGameStateManager()->getGraphicsEngine()->drawSprite(getGameStateManager()->getGraphicsEngine()->getOneTextureCar(i), ptr_sprite, i * 250 + 10, 700, 1.0, 1.0, 0.0);
+	}*/
 
 	// En premier afficher les voitures ne sautant pas pour qu'elles apparaissent au dessous des autres.
 	for (int i = 0; i < MAX_VOITURES; ++i) 
@@ -85,6 +98,10 @@ void RaceState::draw()
 			drawVoiture(i);
 		}
 	}
+
+	delete ptr_spriteCircuit;
+	delete ptr_spriteTrajectoire;
+	delete ptr_spriteObstacles;
 }
 
 //------------------------------------------------------------------------------
@@ -92,9 +109,8 @@ void RaceState::drawVoiture(int n)
 {
 		Car *ptr_car = getGameStateManager()->getGameData()->getOneCar(n);
 		sf::Sprite *ptr_sprite = getGameStateManager()->getGraphicsEngine()->getOneSpriteCar(n);
-
-		double x = ptr_car->getPoint().getX() - (VOITURE_LARGEUR / 2);
-		double y = ptr_car->getPoint().getY() - (VOITURE_HAUTEUR / 2);
+		double x = ptr_car->getPoint().getX();
+		double y = ptr_car->getPoint().getY();
 
 		// Est-on en train de sauter ?
 		double e = ptr_car->getEtatSaut();
@@ -120,7 +136,7 @@ void RaceState::drawVoiture(int n)
 }
 
 //------------------------------------------------------------------------------
-void RaceState::update(double deltaTime)
+void RaceState::update(int deltaTime)
 {
 	// Passer le relai au différents contrôleurs de voitures.
 	ptr_controller_->update(GameData::VOITURE_JOUEUR_0, getGameStateManager());
@@ -147,40 +163,46 @@ void RaceState::keyboardEvent(KeyboardEvent *ptr_event)
 	switch (ptr_event->getKeyCode())
 	{
 		case KEY_UP1:
-			ptr_car1->setAccelere(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			//cout << "KEY_UP1 " << endl;
+			//cout << "ptr_event->getEvent() = " << ptr_event->getEvent() << endl;
+			//cout << "KeyboardEvent::KEY_PRESSE = " << KeyboardEvent::KEY_PRESSE << endl;
+			ptr_car1->setAccelere(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_DOWN1:
-			ptr_car1->setFreine(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car1->setFreine(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_LEFT1:
-			ptr_car1->setLeft(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car1->setLeft(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_RIGHT1:
-			ptr_car1->setRight(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car1->setRight(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_UP2:
-			ptr_car2->setAccelere(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car2->setAccelere(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_DOWN2:
-			ptr_car2->setFreine(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car2->setFreine(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_LEFT2:
-			ptr_car2->setLeft(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car2->setLeft(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 
 		case KEY_RIGHT2:
-			ptr_car2->setRight(ptr_event->getEvent().type == KeyboardEvent::KEY_PRESSE);
+			ptr_car2->setRight(ptr_event->getEvent() == KeyboardEvent::KEY_PRESSE);
 			break;
 			
 		case KEY_ESCAPE:
 			getGameStateManager()->setMenuState();
-			break; 
+			break;
+			
+		default:
+			break;
 	}
 }
 
@@ -203,13 +225,11 @@ void RaceState::testCollisions()
 						// Calcul de la distance entre les 2 voitures.
 						//double distance = Math.hypot(abs(ptr_car1->getPoint()->getX() - ptr_car2->getPoint()->getX()), abs(ptr_car1->getPoint()->getY() - ptr_car2->getPoint()->getY()));
 						double distance = ptr_car1->getPoint().distancePoint(ptr_car2->getPoint());
-						if (distance < DISTANCE_COLLISION)
+						if (distance < GraphicsEngine::DISTANCE_COLLISION)
 						{
 							// Conséquences de la collision.
-							ptr_car1->getPoint().setX(ptr_car1->getOldPoint().getX());
-							ptr_car1->getPoint().setY(ptr_car1->getOldPoint().getY());
-							ptr_car2->getPoint().setX(ptr_car2->getOldPoint().getX());
-							ptr_car2->getPoint().setY(ptr_car2->getOldPoint().getY());
+							ptr_car1->setPoint(Point(ptr_car1->getOldPoint().getX(),ptr_car1->getOldPoint().getY()));
+							ptr_car2->setPoint(Point(ptr_car2->getOldPoint().getX(),ptr_car2->getOldPoint().getY()));
 							ptr_car1->setVitesse(0);
 							ptr_car2->setVitesse(0);
 							ptr_car1->setCollision(DELAI_COLLISION);
@@ -260,8 +280,7 @@ void RaceState::testObstacles()
 			else if (color.b == 255 && color.r == 0)
 			{
 				// On est sur l'obstacle (traitement idem collision).
-				ptr_car->getPoint().setX(ptr_car->getOldPoint().getX());
-				ptr_car->getPoint().setX(ptr_car->getOldPoint().getX());
+				ptr_car->setPoint(Point(ptr_car->getOldPoint().getX(),ptr_car->getOldPoint().getY()));
 				ptr_car->setVitesse(0);
 				ptr_car->setCollision(DELAI_COLLISION);
 			}

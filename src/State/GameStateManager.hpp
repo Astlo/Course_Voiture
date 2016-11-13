@@ -14,12 +14,17 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../Input/IKeyObserver.hpp"
 
+class GraphicsEngine;
+class GameState;
+class GameData;
+class IKeySubject;
+/*
 #include "GameState.hpp"
 #include "../Graphics/GraphicsEngine.hpp"
 #include "../Data/GameData.hpp"
-#include "../Input/IKeyObserver.hpp"
-#include "../Input/IKeySubject.hpp"
+#include "../Input/IKeySubject.hpp"*/
 
 /******************************************************************************/
 class GameStateManager : public IKeyObserver
@@ -39,11 +44,9 @@ class GameStateManager : public IKeyObserver
 		
 		~GameStateManager();
 	//Méthodes
-		void update(double deltaTime);
+		void update(int deltaTime);
 
 		void draw();
-
-		void dispose();
 
 		void keyboardEvent(KeyboardEvent *ptr_event); // actualiser(donee)
 	
@@ -70,39 +73,37 @@ class GameStateManager : public IKeyObserver
 		
 		void setEndRaceState();
 
-		void keyEvent(KeyboardEvent *ptr_event);
-	
 	private:
-		/**
-		 * Les données du jeu.
-		**/
-		GameData *ptr_gameData_;
 		/**
 		 * Moteur graphique.
 		**/
 		GraphicsEngine *ptr_graphicsEngine_;
+		/**
+		 * Les données du jeu.
+		**/
+		GameData *ptr_gameData_;
 		
 		IKeySubject *ptr_subject_;
 		/**
-		 * Etat courant.
-		**/
-		GameState *ptr_gameState_;
-		/**
 		 * Etat menu.
 		**/
-		GameState *ptr_menuState_;
+		GameState* ptr_menuState_;
 		/**
 		 * Etat course.
 		**/
-		GameState *ptr_raceState_;
+		GameState* ptr_raceState_;	
 		/**
 		 * Etat debut de course.
 		**/
-		GameState *ptr_startRaceState_;
+		GameState* ptr_startRaceState_;
 		/**
 		 * Etat fin de course.
 		**/
-		GameState *ptr_endRaceState_;
+		GameState* ptr_endRaceState_;
+		/**
+		 * Etat courant.
+		**/
+		GameState *ptr_gameState_;	
 
 }; //class GameStateManager
 /******************************************************************************/

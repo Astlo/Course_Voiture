@@ -23,11 +23,11 @@ class EndRaceState : public RaceState
 
 		void draw();
 
-		void update(double deltaTime);
+		void update(int deltaTime);
 
 		void keyboardEvent(KeyboardEvent *ptr_event);
 	
-	protected:
+	//protected:
 	
 	//Constructeur et destructeur
 		/** --------------------------------------------------------------------

@@ -5,6 +5,7 @@
 **/
 
 #include "Point.hpp"
+ 
 #include <cmath> //pour les fonctions mathématiques
 #include <sstream> //pour les conversions en chaine
 
@@ -16,7 +17,7 @@ Point::Point() : x_ (0), y_ (0)
 {}
 
 //------------------------------------------------------------------------------
-Point::Point(unsigned x, unsigned y) : x_ (x), y_ (y)
+Point::Point(int x, int y) : x_ (x), y_ (y)
 {}
 
 //DESTRUCTEUR
@@ -32,7 +33,7 @@ double Point::distancePoint(const Point & autre)
 }
 
 //------------------------------------------------------------------------------
-void Point::deplacer(unsigned dx, unsigned dy)
+void Point::deplacer(int dx, int dy)
 {
 	x_ = x_ + dx;
 	y_ = y_ + dy;
@@ -54,26 +55,26 @@ string Point::toString() const
 
 //ACCESSEURS
 //------------------------------------------------------------------------------
-unsigned Point::getX() const
+int Point::getX() const
 {
 	return x_;
 }
 
 //------------------------------------------------------------------------------
-unsigned Point::getY() const
+int Point::getY() const
 {
 	return y_;
 }
 
 //MUTATEURS
 //------------------------------------------------------------------------------
-void Point::setX(unsigned x)
+void Point::setX(int x)
 {
 	x_ = x;
 }
 
 //------------------------------------------------------------------------------
-void Point::setY(unsigned y)
+void Point::setY(int y)
 {
 	y_ = y;
 }

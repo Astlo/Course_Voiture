@@ -28,7 +28,7 @@ InputEngine::~InputEngine()
 //------------------------------------------------------------------------------
 void InputEngine::addObs(IKeyObserver *ptr_obs)
 {
-	obs_.push_back(*ptr_obs);
+	obs_.push_back(ptr_obs);
 }
 
 //------------------------------------------------------------------------------
@@ -41,24 +41,27 @@ void InputEngine::removeObs(IKeyObserver *ptr_obs)
 //------------------------------------------------------------------------------
 void InputEngine::notifyObs(KeyboardEvent *ptr_event)
 {
-	for (IKeyObserver o : obs_) {
-		o.keyEvent(*ptr_event);
+	//for_each(obs_.begin(), obs_.end(), obs_[i]->keyboardEvent(ptr_event));
+	for (unsigned i = 0 ; i < obs_.size(); ++i)
+	{
+		obs_[i]->keyboardEvent(ptr_event);
 	}
+ 
 }
-
+/*
 //------------------------------------------------------------------------------
-bool InputEngine::keyDown(Keyboard::Key keycode)
+bool InputEngine::keyDown(sf::Keyboard::Key keycode)
 {
 	notifyObs(new KeyboardEvent(KeyboardEvent::KEY_PRESSE, keycode));
 	return true;
 }
 
 //------------------------------------------------------------------------------
-bool InputEngine::keyUp(Keyboard::Key keycode)
+bool InputEngine::keyUp(sf::Keyboard::Key keycode)
 {
 	notifyObs(new KeyboardEvent(KeyboardEvent::KEY_RELEASE, keycode));
 	return true;
-}
+}*/
 /*
 //------------------------------------------------------------------------------
 int InputEngine::positionObs(IKeyObserver *ptr_obs)
